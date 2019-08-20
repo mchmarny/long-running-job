@@ -7,4 +7,5 @@ export VM_INSTANCE_ID=$(gcloud compute instances describe ${JOB_NAME} --zone ${V
 
 gcloud logging read "resource.type=gce_instance AND \
 	logName=projects/cloudylabs/logs/cos_containers AND \
-	resource.labels.instance_id=${VM_INSTANCE_ID}"
+	resource.labels.instance_id=${VM_INSTANCE_ID}" \
+	--order="asc"

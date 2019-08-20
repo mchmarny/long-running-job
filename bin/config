@@ -2,7 +2,7 @@
 
 # config
 export APP_NAME="long-running-job"
-export APP_VERSION="0.1.1"
+export APP_VERSION="0.2.1"
 export JOB_NAME="${APP_NAME}-1"
 export VM_TYPE="n1-standard-1"
 export VM_ZONE="us-central1-c"
