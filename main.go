@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	logger = log.New(os.Stdout, "", 0)
+	logger = log.New(os.Stdout, "[LRJ]", 0)
 
 	projectID  = pr.GetIDOrFail()
 	bucketName = ev.MustGetEnvVar("BUCKET", "")
@@ -21,6 +21,8 @@ var (
 )
 
 func main() {
+
+	defer shutdownVM()
 
 	logger.Println("Starting long running job demo...")
 	ctx := context.Background()
@@ -34,14 +36,12 @@ func main() {
 	failOnErr(err)
 
 	logger.Printf("Processed %d records", count)
-	shutdownVM()
 
 }
 
 func failOnErr(err error) {
 	if err != nil {
 		logger.Println(err)
-		shutdownVM()
 	}
 }
 
