@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Global config
+PROJECT_NAME="cloudylabs"
+CLUSTER_NAME="cr07"
+CLUSTER_ZONE="us-west1-c"
+SERVICE_NAME="starter"
+SERVICE_NAMESPACE="demo"
+SERVICE_VERSION="0.0.1"
+
+

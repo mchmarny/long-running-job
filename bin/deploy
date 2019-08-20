@@ -1,0 +1,13 @@
+#!/bin/bash
+
+DIR="$(dirname "$0")"
+. "${DIR}/config"
+
+gcloud beta run deploy $SERVICE_NAME \
+	--image "gcr.io/${PROJECT}/${SERVICE_NAME}:${SERVICE_VERSION}" \
+	--platform gke \
+	--cluster $CLUSTER_NAME \
+	--cluster-location $CLUSTER_ZONE \
+	--namespace $SERVICE_NAMESPACE \
+	--set-env-vars "MESSAGE=Hello World"
+

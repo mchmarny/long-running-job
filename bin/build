@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DIR="$(dirname "$0")"
+. "${DIR}/config"
+
+# modules
+go mod tidy
+go mod vendor
+
+gcloud builds submit \
+    --tag "gcr.io/${PROJECT_NAME}/${SERVICE_NAME}:${SERVICE_VERSION}"
+

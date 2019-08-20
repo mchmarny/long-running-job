@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DIR="$(dirname "$0")"
+. "${DIR}/config"
+
+gcloud beta run services delete $SERVICE_NAME \
+	--platform gke \
+	--cluster $CLUSTER_NAME \
+	--cluster-location $CLUSTER_ZONE \
+	--namespace $SERVICE_NAMESPACE

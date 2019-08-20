@@ -1,0 +1,23 @@
+#!/bin/bash
+
+DIR="$(dirname "$0")"
+. "${DIR}/config"
+
+gcloud config set project $PROJECT_NAME
+gcloud config set compute/zone $CLUSTER_ZONE
+
+gcloud services enable container.googleapis.com \
+    containerregistry.googleapis.com cloudbuild.googleapis.com
+
+gcloud components update
+gcloud components install beta
+
+gcloud config set run/platform gke
+gcloud config set run/cluster $CLUSTER_NAME
+gcloud config set run/cluster_location $CLUSTER_ZONE
+gcloud config set run/namespace $SERVICE_NAMESPACE
+
+gcloud container clusters get-credentials $CLUSTER_NAME
+
+
+
