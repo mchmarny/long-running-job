@@ -4,6 +4,28 @@
 
 Demo of how to use GCE `create-with-container` feature for long running (potentially jobs
 
+## Pre-requirements
+
+### GCP Project and gcloud SDK
+
+If you don't have one already, start by creating new project and configuring [Google Cloud SDK](https://cloud.google.com/sdk/docs/). Similarly, if you have not done so already, you will have [set up Cloud Run](https://cloud.google.com/run/docs/setup).
+
+
+## Setup
+
+To start, clone this repo:
+
+```shell
+git clone https://github.com/mchmarny/long-running-job.git
+```
+
+And navigate into that directory:
+
+```shell
+cd long-running-job
+```
+
+
 ## Run Locally
 
 ```shell
