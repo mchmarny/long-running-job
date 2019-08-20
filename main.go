@@ -4,8 +4,10 @@ import (
 	"context"
 	"log"
 	"os"
+	"os/exec"
 
 	ev "github.com/mchmarny/gcputil/env"
+	mt "github.com/mchmarny/gcputil/meta"
 	pr "github.com/mchmarny/gcputil/project"
 )
 
@@ -32,11 +34,34 @@ func main() {
 	failOnErr(err)
 
 	logger.Printf("Processed %d records", count)
+	shutdownVM()
 
 }
 
 func failOnErr(err error) {
 	if err != nil {
-		log.Fatal(err)
+		logger.Println(err)
+		shutdownVM()
+	}
+}
+
+func shutdownVM() {
+
+	mc := mt.GetClient("long-running-job-demo")
+
+	vmName, err := mc.InstanceName()
+	failOnErr(err)
+
+	vmZone, err := mc.Zone()
+	failOnErr(err)
+
+	cmd := exec.Command("gcloud", "compute", "instances", "delete",
+		vmName, "--zone", vmZone)
+
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err = cmd.Run()
+	if err != nil {
+		logger.Fatalf("Error on VM shutdown %v", err)
 	}
 }

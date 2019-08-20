@@ -1,8 +1,6 @@
 # long-running-job
 
-> WIP: Work in progress, this readme file is being updated
-
-Demo of how to use GCE `create-with-container` feature for long running (potentially jobs
+Demo of how to use GCE's `create-with-container` feature for long running (potentially stateless) jobs.
 
 ## Pre-requirements
 
