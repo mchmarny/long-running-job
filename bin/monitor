@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DIR="$(dirname "$0")"
+. "${DIR}/config"
+
+export VM_INSTANCE_ID=$(gcloud compute instances describe ${JOB_NAME} --zone ${VM_ZONE} --format="value(id)")
+
+gcloud logging read "resource.type=gce_instance AND \
+	logName=projects/cloudylabs/logs/cos_containers AND \
+	resource.labels.instance_id=${VM_INSTANCE_ID}"

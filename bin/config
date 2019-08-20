@@ -1,11 +1,17 @@
 #!/bin/bash
 
-# Global config
-PROJECT_NAME="cloudylabs"
-CLUSTER_NAME="cr07"
-CLUSTER_ZONE="us-west1-c"
-SERVICE_NAME="starter"
-SERVICE_NAMESPACE="demo"
-SERVICE_VERSION="0.0.1"
+# config
+export APP_NAME="long-running-job"
+export APP_VERSION="0.1.1"
+export JOB_NAME="${APP_NAME}-1"
+export VM_TYPE="n1-standard-1"
+export VM_ZONE="us-central1-c"
+export SRC_BUCKET="long-running-job-src-files"
+export TEST_OBJECT="1500000-Sales-Records.csv.gz"
+export JOB_USER_KEY="${HOME}/.gcp-keys/cloudylabs-demo-sa.pem"
+export PUB_TOPIC="${APP_NAME}-topic"
+
+# derived
+export PROJECT=$(gcloud config get-value project)
 
 

@@ -3,11 +3,18 @@
 DIR="$(dirname "$0")"
 . "${DIR}/config"
 
-gcloud beta run deploy $SERVICE_NAME \
-	--image "gcr.io/${PROJECT}/${SERVICE_NAME}:${SERVICE_VERSION}" \
-	--platform gke \
-	--cluster $CLUSTER_NAME \
-	--cluster-location $CLUSTER_ZONE \
-	--namespace $SERVICE_NAMESPACE \
-	--set-env-vars "MESSAGE=Hello World"
+gcloud compute instances create-with-container $JOB_NAME \
+	--container-image="gcr.io/${PROJECT}/${APP_NAME}:${APP_VERSION}" \
+	--machine-type=$VM_TYPE \
+	--zone=$VM_ZONE \
+	--image-family=cos-stable \
+	--image-project=cos-cloud \
+	--maintenance-policy=MIGRATE \
+	--container-restart-policy=always \
+	--scopes=cloud-platform \
+	--container-privileged \
+	--container-env="GOOGLE_APPLICATION_CREDENTIALS=/tmp/sa.pem,BUCKET=${SRC_BUCKET},OBJECT=${TEST_OBJECT},TOPIC=${PUB_TOPIC}" \
+	--container-mount-host-path=mount-path=/tmp,host-path=/tmp,mode=rw
 
+
+gcloud compute scp ${JOB_USER_KEY} "${JOB_NAME}:/tmp/sa.pem" --zone=$VM_ZONE

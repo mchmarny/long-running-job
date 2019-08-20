@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DIR="$(dirname "$0")"
+. "${DIR}/config"
+
+export GO111MODULE=on
+go mod tidy
+go mod vendor
+
+export BUCKET="${SRC_BUCKET}"
+export OBJECT="${TEST_OBJECT}"
+export TOPIC="${PUB_TOPIC}"
+
+go run *.go -v
