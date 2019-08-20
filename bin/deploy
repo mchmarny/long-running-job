@@ -10,8 +10,6 @@ gcloud compute instances create-with-container $JOB_NAME \
 	--image-family=cos-stable \
 	--image-project=cos-cloud \
 	--maintenance-policy=MIGRATE \
-	--container-restart-policy=never \
-	--no-restart-on-failure \
 	--scopes=cloud-platform \
 	--container-privileged \
 	--container-env="GOOGLE_APPLICATION_CREDENTIALS=/tmp/sa.pem,BUCKET=${SRC_BUCKET},OBJECT=${TEST_OBJECT},TOPIC=${PUB_TOPIC}" \
