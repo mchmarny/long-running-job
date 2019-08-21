@@ -35,6 +35,8 @@ func main() {
 
 	defer shutdownVM(ctx)
 
+	// Sample Code
+	// Replace this with your code
 	logger.Println("Initializing publisher...")
 	pub, err := newPublisher(ctx, projectID, topicName)
 	failOnErr(err)
@@ -44,6 +46,7 @@ func main() {
 	failOnErr(err)
 
 	logger.Printf("Processed %d records", count)
+	// End of sample code
 
 }
 
@@ -73,8 +76,6 @@ func shutdownVM(ctx context.Context) {
 	failOnErr(errors.Wrap(err, "Error on client request create"))
 
 	req = req.WithContext(ctx)
-	// req.Header.Set("Authorization", "Bearer {TOKEN}")
-
 	resp, err := client.Do(req)
 	failOnErr(errors.Wrap(err, "Error while executing request"))
 	defer resp.Body.Close()
