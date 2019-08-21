@@ -1,6 +1,6 @@
 # long-running-job
 
-Demo showcasing the use container execution feature in GCE to effectively run long running jobs. In this example I parse gzip file from GCS and submit individual records to PubSub topic for subsequent processing but this could be really any thing you can build into an image.
+Demo showcasing the use of container execution feature in GCE to effectively run long running jobs. In this example I parse gzip file from GCS and submit individual records to PubSub topic for subsequent processing but this could be really any thing you can build into an image.
 
 In this approach you can use custom machines with that extra RAM, GPU/TPU accelerators, and launch the host VM in VPC. And, since the host VM gets terminate (deleted) at the conclusion of container execution you won't have to pay for idle VM time.
 
