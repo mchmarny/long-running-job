@@ -1,6 +1,11 @@
 # long-running-job
 
-Demo project showcasing how to use GCE's container exec feature to run long running jobs. This example also shows how to terminate (delete) the VM upon finish of the container execution.
+Demo showcasing the use container execution feature in GCE to effectively run long running jobs. In this example I parse gzip file from GCS and submit individual records to PubSub topic for subsequent processing but this could be really any thing you can build into an image.
+
+In this approach you can use custom machines with that extra RAM, GPU/TPU accelerators, and launch the host VM in VPC. And, since the host VM gets terminate (deleted) at the conclusion of container execution you won't have to pay for idle VM time.
+
+> I made this repo into a GitHub template. Just click the
+
 
 ## Pre-requirements
 
