@@ -10,6 +10,6 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
     -mod vendor \
     -o app
 
-FROM gcr.io/distroless/static:nonroot
+FROM gcr.io/distroless/static
 COPY --from=builder /src/app .
 ENTRYPOINT ["./app"]
