@@ -1,6 +1,6 @@
 # long-running-job
 
-How to use GCE's container exec feature for long running (and self-terminating) jobs.
+Demo project showcasing how to use GCE's container exec feature to run long running jobs. This example also shows hot terminate (delete) the VM after the user code in container exited.
 
 ## Pre-requirements
 
@@ -8,6 +8,9 @@ How to use GCE's container exec feature for long running (and self-terminating) 
 
 If you don't have one already, start by creating new project and configuring [Google Cloud SDK](https://cloud.google.com/sdk/docs/). Similarly, if you have not done so already, you will have [set up Cloud Run](https://cloud.google.com/run/docs/setup).
 
+### GCP Service Account
+
+> TODO:
 
 ## Setup
 
