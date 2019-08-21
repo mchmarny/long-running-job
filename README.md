@@ -1,6 +1,6 @@
 # long-running-job
 
-Demo of how to use GCE's `create-with-container` feature for long running (potentially stateless) jobs.
+How to use GCE's container exec feature for long running (and self-terminating) jobs.
 
 ## Pre-requirements
 
