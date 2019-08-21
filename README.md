@@ -4,9 +4,6 @@ Demo showcasing the use container execution feature in GCE to effectively run lo
 
 In this approach you can use custom machines with that extra RAM, GPU/TPU accelerators, and launch the host VM in VPC. And, since the host VM gets terminate (deleted) at the conclusion of container execution you won't have to pay for idle VM time.
 
-> I made this repo into a GitHub template. Just click the
-
-
 ## Pre-requirements
 
 If you don't have one already, start by creating new project and configuring [Google Cloud SDK](https://cloud.google.com/sdk/docs/). Similarly, if you have not done so already, you will have [set up Cloud Run](https://cloud.google.com/run/docs/setup).
