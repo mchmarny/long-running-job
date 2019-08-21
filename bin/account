@@ -1,0 +1,40 @@
+#!/bin/bash
+
+DIR="$(dirname "$0")"
+. "${DIR}/config"
+
+mkdir -p $KEY_DIR
+
+gcloud iam service-accounts create $APP_NAME \
+    --display-name "Service Invoker Account for ${APP_NAME}" \
+    --quiet
+
+gcloud projects add-iam-policy-binding $PROJECT \
+	--member "serviceAccount:${APP_NAME}@${PROJECT}.iam.gserviceaccount.com" \
+    --role roles/logging.logWriter
+
+gcloud projects add-iam-policy-binding $PROJECT \
+	--member "serviceAccount:${APP_NAME}@${PROJECT}.iam.gserviceaccount.com" \
+    --role roles/cloudtrace.agent
+
+gcloud projects add-iam-policy-binding $PROJECT \
+	--member "serviceAccount:${APP_NAME}@${PROJECT}.iam.gserviceaccount.com" \
+    --role roles/monitoring.metricWriter
+
+gcloud projects add-iam-policy-binding $PROJECT \
+	--member "serviceAccount:${APP_NAME}@${PROJECT}.iam.gserviceaccount.com" \
+    --role roles/storage.objectViewer
+
+gcloud projects add-iam-policy-binding $PROJECT \
+	--member "serviceAccount:${APP_NAME}@${PROJECT}.iam.gserviceaccount.com" \
+    --role roles/pubsub.editor
+
+#only needs compute.instances
+gcloud projects add-iam-policy-binding $PROJECT \
+	--member "serviceAccount:${APP_NAME}@${PROJECT}.iam.gserviceaccount.com" \
+    --role roles/compute.instanceAdmin
+
+gcloud iam service-accounts keys create \
+	--iam-account "${APP_NAME}@${PROJECT}.iam.gserviceaccount.com" \
+	$SA_KEY_PATH
+

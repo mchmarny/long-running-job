@@ -17,4 +17,4 @@ gcloud compute instances create-with-container $JOB_NAME \
 	--tags="${APP_NAME},demo"
 
 echo "Coping service account key..."
-gcloud compute scp ${JOB_USER_KEY} "${JOB_NAME}:/tmp/sa.pem" --zone=$VM_ZONE
+gcloud compute scp ${SA_KEY_PATH} "${JOB_NAME}:/tmp/sa.pem" --zone=$VM_ZONE
