@@ -38,19 +38,21 @@ func provide(ctx context.Context, p *publisher, bucketName, objectURI string) (c
 
 	for {
 		values, e := csvr.Read()
+
 		if e == io.EOF {
 			break
 		}
+
 		if e != nil {
 			return 0, errors.Wrap(e, "Error reading CSV line")
 		}
 
-		// Printing purely for demo logging effect
+		// Pringint purely for demo logging effect
 		line := strings.Join(values, "|")
-		logger.Printf("Line: %s", line)
+		recCount++
+		logger.Printf("Line[%d] %s", recCount, line)
 
 		p.publish(ctx, []byte(line))
-		recCount++
 
 	}
 

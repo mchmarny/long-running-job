@@ -5,35 +5,33 @@ import (
 	"log"
 	"os"
 
-	"fmt"
-	"net/http"
+	"github.com/mchmarny/gcputil/env"
+	"github.com/mchmarny/gcputil/project"
+	"github.com/mchmarny/gcputil/vm"
+)
 
-	"github.com/pkg/errors"
-
-	"golang.org/x/oauth2/google"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/iam/v1"
-
-	ev "github.com/mchmarny/gcputil/env"
-	mt "github.com/mchmarny/gcputil/meta"
-	pr "github.com/mchmarny/gcputil/project"
+const (
+	defaultShutdownFlag = "yes"
 )
 
 var (
 	logger = log.New(os.Stdout, "[LRJ]", 0)
 
-	projectID  = pr.GetIDOrFail()
-	bucketName = ev.MustGetEnvVar("BUCKET", "")
-	objectName = ev.MustGetEnvVar("OBJECT", "")
-	topicName  = ev.MustGetEnvVar("TOPIC", "")
+	projectID  = project.GetIDOrFail()
+	bucketName = env.MustGetEnvVar("BUCKET", "")
+	objectName = env.MustGetEnvVar("OBJECT", "")
+	topicName  = env.MustGetEnvVar("TOPIC", "")
+	doShutdown = env.MustGetEnvVar("SHUTDOWN", defaultShutdownFlag)
 )
 
 func main() {
 
-	logger.Println("Starting long running job demo...")
+	logger.Println("Starting long running job...")
 	ctx := context.Background()
 
-	defer shutdownVM(ctx)
+	if doShutdown == defaultShutdownFlag {
+		defer vm.ShutdownHostVM(ctx, "long-runing-job-demo")
+	}
 
 	// Sample Code
 	// Replace this with your code
@@ -46,7 +44,7 @@ func main() {
 	failOnErr(err)
 
 	logger.Printf("Processed %d records", count)
-	// End of sample code
+	// End Sample Code
 
 }
 
@@ -54,34 +52,4 @@ func failOnErr(err error) {
 	if err != nil {
 		logger.Fatal(err)
 	}
-}
-
-func shutdownVM(ctx context.Context) {
-
-	mc := mt.GetClient("long-running-job-demo")
-
-	vmName, err := mc.InstanceName()
-	failOnErr(err)
-
-	vmZone, err := mc.Zone()
-	failOnErr(err)
-
-	client, err := google.DefaultClient(ctx, iam.CloudPlatformScope)
-	failOnErr(errors.Wrap(err, "Error on client create"))
-
-	u := fmt.Sprintf(
-		"https://www.googleapis.com/compute/v1/projects/%s/zones/%s/instances/%s",
-		projectID, vmZone, vmName)
-	req, err := http.NewRequest(http.MethodDelete, u, nil)
-	failOnErr(errors.Wrap(err, "Error on client request create"))
-
-	req = req.WithContext(ctx)
-	resp, err := client.Do(req)
-	failOnErr(errors.Wrap(err, "Error while executing request"))
-	defer resp.Body.Close()
-
-	if err := googleapi.CheckResponse(resp); err != nil {
-		failOnErr(errors.Wrap(err, "Invalid shutdown command response"))
-	}
-
 }
