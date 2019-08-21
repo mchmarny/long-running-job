@@ -1,5 +1,7 @@
 # long-running-job
 
+> More detailed blog post on this including full gcloud commands is available at [m.chmarny.com](https://m.chmarny.com/how-to-run-containerized-workloads-in-gce-vm-87c7c3e952f3)
+
 While the idea of a serverless platform and long running workloads does seem somewhat "unnatural" at first, smart people are already working on that (looking at you @Knative community). In the meantime, a simple approach is sometimes all you may need.
 
 In this demo I will illustrating how to use Google Compute Engine (GCE) container execution option to run variable duration jobs. This approach supports custom VMs, GPU/TPU accelerators and VPC networks… so may be handy alternative to other compute options on GCP. I'll also demo how to auto-terminate the created VM on container completion, so you won't have to pay for idle VM time. 
