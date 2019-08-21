@@ -3,7 +3,6 @@
 DIR="$(dirname "$0")"
 . "${DIR}/config"
 
-echo "Creating VM with container..."
 gcloud compute instances create-with-container $JOB_NAME \
 	--container-image="gcr.io/${PROJECT}/${APP_NAME}:${APP_VERSION}" \
 	--machine-type=$VM_TYPE \

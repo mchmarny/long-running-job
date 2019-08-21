@@ -11,7 +11,3 @@ gcloud services enable --quiet \
     containerregistry.googleapis.com \
     pubsub.googleapis.com \
     storage-api.googleapis.com
-
-
-
-

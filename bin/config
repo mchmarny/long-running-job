@@ -1,18 +1,40 @@
 #!/bin/bash
 
-# config
+# Name of the application, used to identify jobs
 export APP_NAME="long-running-job"
-export APP_VERSION="0.4.1"
-export JOB_NAME="${APP_NAME}-5"
-export VM_TYPE="n1-standard-1"
-export VM_ZONE="us-central1-c"
-export SRC_BUCKET="long-running-job-src-files"
-export JOB_USER_KEY="${HOME}/.gcp-keys/cloudylabs-demo-sa.pem"
-export PUB_TOPIC="${APP_NAME}-topic"
-#export TEST_OBJECT="1500000-Sales-Records.csv.gz" # larger
-export TEST_OBJECT="100-Sales-Records.csv.gz" # small
 
-# derived
+# Version of your app, used in tagging the GCR container image
+export APP_VERSION="0.4.1"
+
+# Name of the job that will be started for your application
+# Allows for multiple instances of the application running concurrently
+export JOB_NAME="${APP_NAME}-5"
+
+# Type of machine (VM) to run your container in (can be custom)
+export VM_TYPE="n1-standard-1"
+
+# Fully qualified compute zone to run the VM in
+export VM_ZONE="us-central1-c"
+
+# Fully qualified path to the service account key
+# Will be uploaded to the VM and mapped to volume inside of your
+# container to execute your code
+export JOB_USER_KEY="${HOME}/.gcp-keys/cloudylabs-demo-sa.pem"
+
+# GCP Project ID (will be derived from your gcloud configuration)
 export PROJECT=$(gcloud config get-value project)
 
+# The following variables specific to this example and may not be
+# necessary in your own code
+
+# Name of the bucket from where the file will be processed
+export SRC_BUCKET="long-running-job-src-files"
+
+# Name of the file (object) in the above bucket
+export TEST_OBJECT="100-Sales-Records.csv.gz" # small sample
+#export TEST_OBJECT="1500000-Sales-Records.csv.gz" # larger sample
+
+# Name of the PubSub topic to publish the individual records from
+# the above file (will be created if doesn't exist)
+export PUB_TOPIC="${APP_NAME}-topic"
 
