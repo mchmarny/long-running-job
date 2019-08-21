@@ -4,7 +4,15 @@ import (
 	"context"
 	"log"
 	"os"
-	"os/exec"
+
+	"fmt"
+	"net/http"
+
+	"github.com/pkg/errors"
+
+	"golang.org/x/oauth2/google"
+	"google.golang.org/api/googleapi"
+	"google.golang.org/api/iam/v1"
 
 	ev "github.com/mchmarny/gcputil/env"
 	mt "github.com/mchmarny/gcputil/meta"
@@ -22,10 +30,10 @@ var (
 
 func main() {
 
-	defer shutdownVM()
-
 	logger.Println("Starting long running job demo...")
 	ctx := context.Background()
+
+	defer shutdownVM(ctx)
 
 	logger.Println("Initializing publisher...")
 	pub, err := newPublisher(ctx, projectID, topicName)
@@ -41,11 +49,11 @@ func main() {
 
 func failOnErr(err error) {
 	if err != nil {
-		logger.Println(err)
+		logger.Fatal(err)
 	}
 }
 
-func shutdownVM() {
+func shutdownVM(ctx context.Context) {
 
 	mc := mt.GetClient("long-running-job-demo")
 
@@ -55,13 +63,24 @@ func shutdownVM() {
 	vmZone, err := mc.Zone()
 	failOnErr(err)
 
-	cmd := exec.Command("gcloud", "compute", "instances", "delete",
-		vmName, "--zone", vmZone)
+	client, err := google.DefaultClient(ctx, iam.CloudPlatformScope)
+	failOnErr(errors.Wrap(err, "Error on client create"))
 
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-	if err != nil {
-		logger.Fatalf("Error on VM shutdown %v", err)
+	u := fmt.Sprintf(
+		"https://www.googleapis.com/compute/v1/projects/%s/zones/%s/instances/%s",
+		projectID, vmZone, vmName)
+	req, err := http.NewRequest(http.MethodDelete, u, nil)
+	failOnErr(errors.Wrap(err, "Error on client request create"))
+
+	req = req.WithContext(ctx)
+	// req.Header.Set("Authorization", "Bearer {TOKEN}")
+
+	resp, err := client.Do(req)
+	failOnErr(errors.Wrap(err, "Error while executing request"))
+	defer resp.Body.Close()
+
+	if err := googleapi.CheckResponse(resp); err != nil {
+		failOnErr(errors.Wrap(err, "Invalid shutdown command response"))
 	}
+
 }

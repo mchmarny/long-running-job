@@ -3,6 +3,7 @@
 DIR="$(dirname "$0")"
 . "${DIR}/config"
 
+echo "Creating VM with container..."
 gcloud compute instances create-with-container $JOB_NAME \
 	--container-image="gcr.io/${PROJECT}/${APP_NAME}:${APP_VERSION}" \
 	--machine-type=$VM_TYPE \
@@ -16,4 +17,5 @@ gcloud compute instances create-with-container $JOB_NAME \
 	--container-mount-host-path=mount-path=/tmp,host-path=/tmp,mode=rw \
 	--tags="${APP_NAME},demo"
 
+echo "Coping service account key..."
 gcloud compute scp ${JOB_USER_KEY} "${JOB_NAME}:/tmp/sa.pem" --zone=$VM_ZONE

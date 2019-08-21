@@ -2,14 +2,15 @@
 
 # config
 export APP_NAME="long-running-job"
-export APP_VERSION="0.3.1"
-export JOB_NAME="${APP_NAME}-2"
+export APP_VERSION="0.4.1"
+export JOB_NAME="${APP_NAME}-5"
 export VM_TYPE="n1-standard-1"
 export VM_ZONE="us-central1-c"
 export SRC_BUCKET="long-running-job-src-files"
-export TEST_OBJECT="1500000-Sales-Records.csv.gz"
 export JOB_USER_KEY="${HOME}/.gcp-keys/cloudylabs-demo-sa.pem"
 export PUB_TOPIC="${APP_NAME}-topic"
+#export TEST_OBJECT="1500000-Sales-Records.csv.gz" # larger
+export TEST_OBJECT="100-Sales-Records.csv.gz" # small
 
 # derived
 export PROJECT=$(gcloud config get-value project)
