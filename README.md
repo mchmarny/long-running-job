@@ -8,23 +8,11 @@ If you don't have one already, start by creating new project and configuring [Go
 
 ## Setup
 
-To start, clone this repo:
+To start, clone this repo, and navigate into that directory:
 
 ```shell
 git clone https://github.com/mchmarny/long-running-job.git
-```
-
-And navigate into that directory:
-
-```shell
 cd long-running-job
-```
-
-
-## Run Locally
-
-```shell
-bin/run
 ```
 
 ## Run in GCE
@@ -68,6 +56,14 @@ bin/monitor
 ```
 
 After the container exists, the VM will be shutdown but the logs should be still available in Stackdriver for forensic analyses
+
+## Run Locally
+
+You can run this code also locally by executing the [bin/run](bin/run) script
+
+```shell
+bin/run
+```
 
 ## Disclaimer
 
