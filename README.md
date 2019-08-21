@@ -32,18 +32,35 @@ bin/run
 
 ## Run in GCE
 
+### Container Image
+
+First, build container image from the included source using the [bin/image](bin/image) script
+
 ```shell
 bin/image
 ```
+
+### Deploy Container to VM
+
+Create a new GCE VM and configure it to run above built image using the [bin/deploy](bin/deploy) script
+
+> Make sure you have a valid service account key configured in [bin/config](bin/config) script
 
 ```shell
 bin/deploy
 ```
 
+### Tail Container Logs
+
+Once the VM started you can monitor the logs output from the VM to Stackdriver using the [bin/monitor](bin/monitor) script
+
+> Note, this command will output only the logs that are output by the user code in the container. To see complete list remove the `jsonPayload.message:"[LRJ]"` filter
+
 ```shell
 bin/monitor
 ```
 
+After the container exists, the VM will be shutdown but the logs should be still available in Stackdriver for forensic analyses
 
 ## Disclaimer
 
