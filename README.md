@@ -1,8 +1,10 @@
 # long-running-job
 
-Demo showcasing the use of container execution feature in GCE to effectively run long running jobs. In this example I parse gzip file from GCS and submit individual records to PubSub topic for subsequent processing but this could be really any thing you can build into an image.
+While the idea of a serverless platform and long running workloads does seem somewhat "unnatural" at first, smart people are already working on that (looking at you @Knative community). In the meantime, a simple approach is sometimes all you may need.
 
-In this approach you can use custom machines with that extra RAM, GPU/TPU accelerators, and launch the host VM in VPC. And, since the host VM gets terminate (deleted) at the conclusion of container execution you won't have to pay for idle VM time.
+In this demo I will illustrating how to use Google Compute Engine (GCE) container execution option to run variable duration jobs. This approach supports custom VMs, GPU/TPU accelerators and VPC networks… so may be handy alternative to other compute options on GCP. I'll also demo how to auto-terminate the created VM on container completion, so you won't have to pay for idle VM time. 
+
+Finally, in this example I'll parses small gzip file from Google Cloud Storage (GCS), but since this approach is not limited by client timeouts you can use it to do pretty much anything… transformations on bigger files, lightweight ETL, or media format encoding. You can even combine it with GCP Task Queue for more complex pipelines.
 
 ## Pre-requirements
 
