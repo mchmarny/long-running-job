@@ -6,7 +6,7 @@ In this approach you can use custom machines with that extra RAM, GPU/TPU accele
 
 ## Pre-requirements
 
-If you don't have one already, start by creating new project and configuring [Google Cloud SDK](https://cloud.google.com/sdk/docs/). Similarly, if you have not done so already, you will have [set up Cloud Run](https://cloud.google.com/run/docs/setup).
+If you don't have one already, start by creating new project and configuring [Google Cloud SDK](https://cloud.google.com/sdk/docs/).
 
 ## Setup
 
