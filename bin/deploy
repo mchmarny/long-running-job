@@ -12,6 +12,8 @@ gcloud compute instances create-with-container $JOB_NAME \
 	--maintenance-policy=MIGRATE \
 	--scopes=cloud-platform \
 	--container-privileged \
+	--container-restart-policy=never \
+	--no-restart-on-failure \
 	--container-env="GOOGLE_APPLICATION_CREDENTIALS=/tmp/sa.pem,BUCKET=${SRC_BUCKET},OBJECT=${TEST_OBJECT},TOPIC=${PUB_TOPIC}" \
 	--container-mount-host-path=mount-path=/tmp,host-path=/tmp,mode=rw \
 	--tags="${APP_NAME},demo"
