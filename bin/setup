@@ -3,6 +3,14 @@
 DIR="$(dirname "$0")"
 . "${DIR}/config"
 
+gcloud services enable --quiet \
+    compute.googleapis.com \
+    cloudbuild.googleapis.com \
+    iam.googleapis.com \
+    containerregistry.googleapis.com \
+    pubsub.googleapis.com \
+    storage-api.googleapis.com
+
 mkdir -p $KEY_DIR
 
 gcloud iam service-accounts create $APP_NAME \

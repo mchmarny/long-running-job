@@ -29,10 +29,10 @@ cd long-running-job
 
 To execute this sample you will need a GCP service account. You can do that either in UI or using `gcloud` SDK. To find out more read [creating and managing service accounts](https://cloud.google.com/iam/docs/creating-managing-service-accounts).
 
-You can create a specific service account for this demo using the [bin/account](bin/account) script. This script will also assign the new account all the necessary IAM roles and provision a service account key which will be saved in the `~/.gcp-keys` folder in your home directory. You should protect that key or just delete it after this demo.
+You can enable the necessary API and create the specific service account for this demo using the [bin/setup](bin/setup) script. This script will also assign the new account all the necessary IAM roles and provision a service account key which will be saved in the `~/.gcp-keys` folder in your home directory. You should protect that key or just delete it after this demo.
 
 ```shell
-bin/account
+bin/setup
 ```
 
 ### Container Image

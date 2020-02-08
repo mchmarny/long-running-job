@@ -47,7 +47,7 @@ func provide(ctx context.Context, p *publisher, bucketName, objectURI string) (c
 			return 0, errors.Wrap(e, "Error reading CSV line")
 		}
 
-		// Pringint purely for demo logging effect
+		// Printing purely for demo logging effect
 		line := strings.Join(values, "|")
 		recCount++
 		logger.Printf("Line[%d] %s", recCount, line)
